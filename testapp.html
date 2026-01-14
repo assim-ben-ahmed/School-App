@@ -1,0 +1,3010 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aivancity Hub</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100%;
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      padding: 20px 20px 30px;
+      color: white;
+      border-radius: 0 0 24px 24px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-section h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .logo-section p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background: #ec4899;
+      border-radius: 50%;
+      border: 2px solid #6366f1;
+    }
+
+    .welcome-section {
+      margin-top: 16px;
+    }
+
+    .welcome-section h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .welcome-section p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 20px;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .quick-action {
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .quick-action:hover {
+      transform: translateY(-4px);
+    }
+
+    .quick-action-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .quick-action-icon.attendance {
+      background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    .quick-action-icon.grades {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .quick-action-icon.cafeteria {
+      background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    .quick-action span {
+      font-size: 12px;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a2b4a;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .view-all {
+      font-size: 13px;
+      color: #6366f1;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* Schedule Card */
+    .schedule-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .schedule-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border-left: 4px solid #6366f1;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .schedule-item:hover {
+      background: #f1f5f9;
+      transform: translateX(4px);
+    }
+
+    .schedule-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-time {
+      min-width: 70px;
+    }
+
+    .schedule-time .time {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a2b4a;
+      display: block;
+    }
+
+    .schedule-time .duration {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .schedule-details h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 4px;
+    }
+
+    .schedule-details p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Announcement Card */
+    .announcement-card {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 16px;
+      padding: 20px;
+      color: white;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .announcement-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .announcement-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .announcement-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .announcement-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .announcement-card p {
+      font-size: 14px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    /* Events Section */
+    .events-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+
+    .events-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .event-card {
+      min-width: 280px;
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-date {
+      display: inline-block;
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6366f1;
+      margin-bottom: 12px;
+    }
+
+    .event-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 8px;
+    }
+
+    .event-card p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    .event-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 480px;
+      width: 100%;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 12px;
+      transition: all 0.3s;
+      color: #64748b;
+    }
+
+    .nav-item:hover {
+      background: #f8fafc;
+    }
+
+    .nav-item.active {
+      color: #6366f1;
+    }
+
+    .nav-item.active .nav-icon {
+      background: #6366f1;
+      color: white;
+    }
+
+    .nav-icon {
+      font-size: 22px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Course Cards */
+    .course-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border-left: 4px solid #6366f1;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+
+    .course-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 4px;
+    }
+
+    .course-code {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .course-progress {
+      font-size: 13px;
+      color: #6366f1;
+      font-weight: 600;
+    }
+
+    .course-info {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Tools Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .tool-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .tool-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .tool-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 4px;
+    }
+
+    .tool-card p {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Chat List */
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .chat-item {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chat-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .chat-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chat-details h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 4px;
+    }
+
+    .chat-details p {
+      font-size: 13px;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-time {
+      font-size: 12px;
+      color: #94a3b8;
+      flex-shrink: 0;
+    }
+
+    /* Events Full List */
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .event-card-full {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .event-card-full:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a2b4a;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:hover {
+      background: #e2e8f0;
+    }
+
+    /* AI Chat Styles */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 100px);
+      min-height: 400px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .ai-message, .user-message {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .user-message {
+      flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .user-message .message-avatar {
+      background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+    }
+
+    .message-bubble {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 16px;
+      max-width: 75%;
+    }
+
+    .user-message .message-bubble {
+      background: #6366f1;
+      color: white;
+    }
+
+    .message-bubble p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      color: #1a2b4a;
+    }
+
+    .user-message .message-bubble p {
+      color: white;
+    }
+
+    .message-bubble p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-bubble ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    .message-bubble li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 12px;
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .chat-input:focus {
+      border-color: #6366f1;
+    }
+
+    .send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Notifications List */
+    .notifications-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .notification-item {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      display: flex;
+      gap: 12px;
+      align-items: start;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid transparent;
+    }
+
+    .notification-item.unread {
+      border-left-color: #6366f1;
+      background: #f8fafc;
+    }
+
+    .notification-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .notification-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notification-content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a2b4a;
+      margin-bottom: 4px;
+    }
+
+    .notification-content p {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .notification-time {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Bot Cards */
+    .bot-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .bot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      border-color: #6366f1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container"><!-- Header -->
+   <div class="header">
+    <div class="header-top">
+     <div class="logo-section">
+      <h1 id="app-title">Aivancity Hub</h1>
+      <p>Student Portal</p>
+     </div>
+     <div class="header-icons"><button class="icon-btn" onclick="goToNotifications()"> 🔔 <span class="notification-badge"></span> </button> <button class="icon-btn" onclick="showProfile()">👤</button>
+     </div>
+    </div>
+    <div class="welcome-section">
+     <h2><span id="welcome-message">Welcome back</span>, <span id="student-name">Alex</span>! 👋</h2>
+     <p>Monday, January 20, 2025</p>
+    </div>
+   </div><!-- Main Content -->
+   <div class="main-content"><!-- Home Tab -->
+    <div id="home-tab" class="tab-content active"><!-- Quick Actions -->
+     <div class="quick-actions">
+      <div class="quick-action" onclick="setActiveNav(document.querySelectorAll('.nav-item')[1], 'schedule')">
+       <div class="quick-action-icon">
+        📅
+       </div><span>Timetable</span>
+      </div>
+      <div class="quick-action" onclick="showSection('attendance')">
+       <div class="quick-action-icon attendance">
+        ✓
+       </div><span>Attendance</span>
+      </div>
+      <div class="quick-action" onclick="showSection('grades')">
+       <div class="quick-action-icon grades">
+        📊
+       </div><span>Grades</span>
+      </div>
+      <div class="quick-action" onclick="showSection('bde')">
+       <div class="quick-action-icon cafeteria">
+        🎓
+       </div><span>BDE</span>
+      </div>
+     </div><!-- Today's Schedule -->
+     <div class="section-title">
+      Today's Schedule <a href="#" class="view-all" onclick="setActiveNav(document.querySelectorAll('.nav-item')[1], 'schedule'); return false;">View All</a>
+     </div>
+     <div class="schedule-card">
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">9:00 AM</span> <span class="duration">2h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Machine Learning</h4>
+        <p>📍 Room A-204 • Prof. Martin</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">2:00 PM</span> <span class="duration">1.5h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Data Structures</h4>
+        <p>📍 Room B-101 • Prof. Chen</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">4:00 PM</span> <span class="duration">1h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Project Workshop</h4>
+        <p>📍 Lab C-305 • Team Session</p>
+       </div>
+      </div>
+     </div><!-- Announcement -->
+     <div class="announcement-card" onclick="showAnnouncement()">
+      <div class="announcement-header">
+       <div class="announcement-icon">
+        📢
+       </div>
+       <div>
+        <h3 id="announcement-title">Campus Event Tomorrow</h3>
+       </div>
+      </div>
+      <p id="announcement-text">Join us for the Tech Innovation Fair at 2 PM in Building A</p>
+     </div><!-- Upcoming Events -->
+     <div class="section-title">
+      Upcoming Events <a href="#" class="view-all" onclick="showSection('events'); return false;">View All</a>
+     </div>
+     <div class="events-scroll">
+      <div class="event-card"><span class="event-date">Jan 22</span>
+       <h4>Career Fair 2025</h4>
+       <p>Meet top tech companies and explore internship opportunities</p>
+       <div class="event-footer"><span>📍 Main Hall</span> <span>•</span> <span>10:00 AM</span>
+       </div>
+      </div>
+      <div class="event-card"><span class="event-date">Jan 25</span>
+       <h4>Coding Hackathon</h4>
+       <p>24-hour coding challenge with amazing prizes</p>
+       <div class="event-footer"><span>📍 Tech Lab</span> <span>•</span> <span>9:00 AM</span>
+       </div>
+      </div>
+      <div class="event-card"><span class="event-date">Jan 28</span>
+       <h4>Guest Lecture: AI Ethics</h4>
+       <p>Industry expert discusses the future of AI</p>
+       <div class="event-footer"><span>📍 Auditorium</span> <span>•</span> <span>3:00 PM</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- End Home Tab --> <!-- Schedule Tab -->
+    <div id="schedule-tab" class="tab-content">
+     <div class="section-title">
+      Weekly Schedule
+     </div>
+     <div class="schedule-card">
+      <h4 style="font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 16px;">Monday</h4>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">9:00 AM</span> <span class="duration">2h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Machine Learning</h4>
+        <p>📍 Room A-204 • Prof. Martin</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">2:00 PM</span> <span class="duration">1.5h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Data Structures</h4>
+        <p>📍 Room B-101 • Prof. Chen</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">4:00 PM</span> <span class="duration">1h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Project Workshop</h4>
+        <p>📍 Lab C-305 • Team Session</p>
+       </div>
+      </div>
+     </div>
+     <div class="schedule-card">
+      <h4 style="font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 16px;">Tuesday</h4>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">10:00 AM</span> <span class="duration">2h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Database Systems</h4>
+        <p>📍 Room A-301 • Prof. Johnson</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">1:00 PM</span> <span class="duration">1.5h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Web Development</h4>
+        <p>📍 Lab B-205 • Prof. Williams</p>
+       </div>
+      </div>
+     </div>
+     <div class="schedule-card">
+      <h4 style="font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 16px;">Wednesday</h4>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">9:00 AM</span> <span class="duration">2h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Machine Learning Lab</h4>
+        <p>📍 Lab A-104 • Prof. Martin</p>
+       </div>
+      </div>
+      <div class="schedule-item">
+       <div class="schedule-time"><span class="time">3:00 PM</span> <span class="duration">1h</span>
+       </div>
+       <div class="schedule-details">
+        <h4>Office Hours</h4>
+        <p>📍 Room C-210 • Various Professors</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- End Schedule Tab --> <!-- Courses Tab -->
+    <div id="courses-tab" class="tab-content">
+     <div class="section-title">
+      My Courses
+     </div>
+     <div class="course-grid">
+      <div class="course-card">
+       <div class="course-header">
+        <div>
+         <h3>Machine Learning</h3><span class="course-code">CS-401</span>
+        </div><span class="course-progress">75%</span>
+       </div>
+       <div class="course-info"><span>📚 12 Modules</span> <span>📝 3 Assignments</span>
+       </div>
+      </div>
+      <div class="course-card">
+       <div class="course-header">
+        <div>
+         <h3>Data Structures</h3><span class="course-code">CS-302</span>
+        </div><span class="course-progress">88%</span>
+       </div>
+       <div class="course-info"><span>📚 10 Modules</span> <span>📝 2 Assignments</span>
+       </div>
+      </div>
+      <div class="course-card">
+       <div class="course-header">
+        <div>
+         <h3>Web Development</h3><span class="course-code">CS-305</span>
+        </div><span class="course-progress">92%</span>
+       </div>
+       <div class="course-info"><span>📚 8 Modules</span> <span>📝 1 Assignment</span>
+       </div>
+      </div>
+      <div class="course-card">
+       <div class="course-header">
+        <div>
+         <h3>Database Systems</h3><span class="course-code">CS-403</span>
+        </div><span class="course-progress">65%</span>
+       </div>
+       <div class="course-info"><span>📚 15 Modules</span> <span>📝 4 Assignments</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- End Courses Tab --> <!-- Events Tab -->
+    <div id="events-tab" class="tab-content">
+     <div class="section-title">
+      Upcoming Events
+     </div>
+     <div class="events-list">
+      <div class="event-card-full"><span class="event-date">Jan 22</span>
+       <h4>Career Fair 2025</h4>
+       <p>Meet top tech companies and explore internship opportunities. Network with industry professionals and discover your next career move.</p>
+       <div class="event-footer"><span>📍 Main Hall</span> <span>•</span> <span>10:00 AM - 4:00 PM</span>
+       </div>
+      </div>
+      <div class="event-card-full"><span class="event-date">Jan 25</span>
+       <h4>Coding Hackathon</h4>
+       <p>24-hour coding challenge with amazing prizes. Form teams and build innovative solutions to real-world problems.</p>
+       <div class="event-footer"><span>📍 Tech Lab</span> <span>•</span> <span>9:00 AM (24h)</span>
+       </div>
+      </div>
+      <div class="event-card-full"><span class="event-date">Jan 28</span>
+       <h4>Guest Lecture: AI Ethics</h4>
+       <p>Industry expert discusses the future of AI and ethical considerations in modern technology development.</p>
+       <div class="event-footer"><span>📍 Auditorium</span> <span>•</span> <span>3:00 PM - 5:00 PM</span>
+       </div>
+      </div>
+      <div class="event-card-full"><span class="event-date">Feb 1</span>
+       <h4>Student Club Fair</h4>
+       <p>Discover student clubs and organizations. Find your community and get involved in campus activities.</p>
+       <div class="event-footer"><span>📍 Campus Quad</span> <span>•</span> <span>12:00 PM - 3:00 PM</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- End Events Tab --> <!-- AI Chat Tab -->
+    <div id="ai-tab" class="tab-content"><!-- Bot Selection View -->
+     <div id="bot-selection-view">
+      <div class="section-title">
+       AI Assistants
+      </div>
+      <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Choose an AI assistant to help you with specific tasks</p>
+      <div style="display: grid; gap: 16px;">
+       <div class="bot-card" onclick="selectBot('campus', '🏫', 'Campus Assistant', 'Get help with campus navigation, schedules, and general information')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          🏫
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Campus Assistant</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Get help with campus navigation, schedules, and general information</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+       <div class="bot-card" onclick="selectBot('email', '📧', 'Email Assistant', 'Draft professional emails, manage correspondence, and improve your writing')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          📧
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Email Assistant</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Draft professional emails, manage correspondence, and improve your writing</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+       <div class="bot-card" onclick="selectBot('wellness', '🧘', 'Mental Health &amp; Wellness Bot', 'Get support for stress management, mindfulness, and emotional wellbeing')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #10b981 0%, #34d399 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          🧘
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Mental Health &amp; Wellness Bot</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Get support for stress management, mindfulness, and emotional wellbeing</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+       <div class="bot-card" onclick="selectBot('interview', '💼', 'Interview Instructor Bot', 'Practice interviews, get feedback, and prepare for your dream job')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          💼
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Interview Instructor Bot</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Practice interviews, get feedback, and prepare for your dream job</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+       <div class="bot-card" onclick="selectBot('study', '📚', 'Study Buddy Bot', 'Get help with homework, study techniques, and academic concepts')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          📚
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Study Buddy Bot</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Get help with homework, study techniques, and academic concepts</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+       <div class="bot-card" onclick="selectBot('career', '🎯', 'Career Advisor Bot', 'Explore career paths, internships, and professional development')">
+        <div style="display: flex; gap: 16px; align-items: center;">
+         <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+          🎯
+         </div>
+         <div style="flex: 1;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Career Advisor Bot</h4>
+          <p style="font-size: 13px; color: #64748b; line-height: 1.4;">Explore career paths, internships, and professional development</p>
+         </div>
+         <div style="font-size: 20px; color: #94a3b8;">
+          →
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Chat View (hidden by default) -->
+     <div id="bot-chat-view" style="display: none;">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;"><button onclick="backToBotSelection()" style="width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; border: none; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.3s;">←</button>
+       <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+        <div id="current-bot-icon" style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+         🤖
+        </div>
+        <div>
+         <h3 id="current-bot-name" style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 2px;">AI Assistant</h3>
+         <p id="current-bot-status" style="font-size: 12px; color: #10b981;">● Online</p>
+        </div>
+       </div>
+      </div>
+      <div class="chat-container">
+       <div class="chat-messages" id="chat-messages"><!-- Messages will be added here dynamically -->
+       </div>
+       <div class="chat-input-container"><input type="text" id="chat-input" class="chat-input" placeholder="Type your message..."> <button class="send-btn" onclick="sendMessage()"> <span>➤</span> </button>
+       </div>
+      </div>
+     </div>
+    </div><!-- End AI Chat Tab --> <!-- Tools Tab -->
+    <div id="tools-tab" class="tab-content">
+     <div class="section-title">
+      Tools &amp; Services
+     </div>
+     <div class="tools-grid">
+      <div class="tool-card" onclick="setActiveNav(document.querySelectorAll('.nav-item')[4], 'courses')">
+       <div class="tool-icon">
+        📚
+       </div>
+       <h4>My Courses</h4>
+       <p>View all courses</p>
+      </div>
+      <div class="tool-card" onclick="setActiveNav(document.querySelectorAll('.nav-item')[4], 'messages')">
+       <div class="tool-icon">
+        💬
+       </div>
+       <h4>Messages</h4>
+       <p>Chat with peers</p>
+      </div>
+      <div class="tool-card" onclick="setActiveNav(document.querySelectorAll('.nav-item')[4], 'notifications')">
+       <div class="tool-icon">
+        🔔
+       </div>
+       <h4>Notifications</h4>
+       <p>View all alerts</p>
+      </div>
+      <div class="tool-card" onclick="showGPACalculator()">
+       <div class="tool-icon">
+        🧮
+       </div>
+       <h4>GPA Calculator</h4>
+       <p>Calculate your GPA</p>
+      </div>
+      <div class="tool-card" onclick="showToolDetail('Room Booking')">
+       <div class="tool-icon">
+        🚪
+       </div>
+       <h4>Room Booking</h4>
+       <p>Reserve study rooms</p>
+      </div>
+      <div class="tool-card" onclick="showToolDetail('Library')">
+       <div class="tool-icon">
+        📖
+       </div>
+       <h4>Library</h4>
+       <p>Browse catalog</p>
+      </div>
+      <div class="tool-card" onclick="showToolDetail('Internships')">
+       <div class="tool-icon">
+        💼
+       </div>
+       <h4>Internships</h4>
+       <p>Find opportunities</p>
+      </div>
+      <div class="tool-card" onclick="showCampusMap()">
+       <div class="tool-icon">
+        🗺️
+       </div>
+       <h4>Campus Map</h4>
+       <p>Navigate campus</p>
+      </div>
+      <div class="tool-card" onclick="showPrintingService()">
+       <div class="tool-icon">
+        🖨️
+       </div>
+       <h4>Printing</h4>
+       <p>Print documents</p>
+      </div>
+      <div class="tool-card" onclick="showSection('bde')">
+       <div class="tool-icon">
+        🎓
+       </div>
+       <h4>BDE</h4>
+       <p>Student council</p>
+      </div>
+      <div class="tool-card" onclick="showToolDetail('Contacts')">
+       <div class="tool-icon">
+        👥
+       </div>
+       <h4>Contacts</h4>
+       <p>Student directory</p>
+      </div>
+      <div class="tool-card" onclick="showAIPoints()">
+       <div class="tool-icon">
+        ⭐
+       </div>
+       <h4>AI Points</h4>
+       <p>Track your rewards</p>
+      </div>
+     </div>
+    </div><!-- End Tools Tab --> <!-- Messages Tab -->
+    <div id="messages-tab" class="tab-content">
+     <div class="section-title">
+      Messages
+     </div>
+     <div class="chat-list">
+      <div class="chat-item">
+       <div class="chat-avatar">
+        👥
+       </div>
+       <div class="chat-details">
+        <h4>CS-401 Study Group</h4>
+        <p>Sarah: Don't forget about tomorrow's project deadline!</p>
+       </div><span class="chat-time">2m</span>
+      </div>
+      <div class="chat-item">
+       <div class="chat-avatar">
+        👨‍🏫
+       </div>
+       <div class="chat-details">
+        <h4>Prof. Martin</h4>
+        <p>Office hours moved to 3 PM today</p>
+       </div><span class="chat-time">15m</span>
+      </div>
+      <div class="chat-item">
+       <div class="chat-avatar">
+        👥
+       </div>
+       <div class="chat-details">
+        <h4>Web Dev Team</h4>
+        <p>Alex: I pushed the latest changes to GitHub</p>
+       </div><span class="chat-time">1h</span>
+      </div>
+      <div class="chat-item">
+       <div class="chat-avatar">
+        🎓
+       </div>
+       <div class="chat-details">
+        <h4>Class of 2025</h4>
+        <p>Anyone going to the career fair tomorrow?</p>
+       </div><span class="chat-time">3h</span>
+      </div>
+      <div class="chat-item">
+       <div class="chat-avatar">
+        👨‍🏫
+       </div>
+       <div class="chat-details">
+        <h4>Prof. Chen</h4>
+        <p>Assignment grades have been posted</p>
+       </div><span class="chat-time">5h</span>
+      </div>
+     </div>
+    </div><!-- End Messages Tab --> <!-- Notifications Tab -->
+    <div id="notifications-tab" class="tab-content">
+     <div class="section-title">
+      Notifications
+     </div>
+     <div class="notifications-list">
+      <div class="notification-item unread">
+       <div class="notification-icon">
+        📚
+       </div>
+       <div class="notification-content">
+        <h4>New Assignment Posted</h4>
+        <p>Machine Learning - Project 3 due Jan 28</p><span class="notification-time">5 minutes ago</span>
+       </div>
+      </div>
+      <div class="notification-item unread">
+       <div class="notification-icon">
+        🎯
+       </div>
+       <div class="notification-content">
+        <h4>Career Fair Registration</h4>
+        <p>Registration opens tomorrow at 9 AM</p><span class="notification-time">1 hour ago</span>
+       </div>
+      </div>
+      <div class="notification-item">
+       <div class="notification-icon">
+        📖
+       </div>
+       <div class="notification-content">
+        <h4>Library Book Due Soon</h4>
+        <p>"Introduction to AI" due in 3 days</p><span class="notification-time">3 hours ago</span>
+       </div>
+      </div>
+      <div class="notification-item">
+       <div class="notification-icon">
+        ✅
+       </div>
+       <div class="notification-content">
+        <h4>Grade Posted</h4>
+        <p>Data Structures Assignment 4 - 95/100</p><span class="notification-time">5 hours ago</span>
+       </div>
+      </div>
+      <div class="notification-item">
+       <div class="notification-icon">
+        🎉
+       </div>
+       <div class="notification-content">
+        <h4>Event Reminder</h4>
+        <p>Coding Hackathon starts in 5 days</p><span class="notification-time">1 day ago</span>
+       </div>
+      </div>
+     </div>
+    </div><!-- End Notifications Tab -->
+   </div><!-- Bottom Navigation -->
+   <div class="bottom-nav">
+    <div class="nav-item active" onclick="setActiveNav(this, 'home')">
+     <div class="nav-icon">
+      🏠
+     </div><span class="nav-label">Home</span>
+    </div>
+    <div class="nav-item" onclick="setActiveNav(this, 'schedule')">
+     <div class="nav-icon">
+      📅
+     </div><span class="nav-label">Schedule</span>
+    </div>
+    <div class="nav-item" onclick="setActiveNav(this, 'events')">
+     <div class="nav-icon">
+      🎉
+     </div><span class="nav-label">Events</span>
+    </div>
+    <div class="nav-item" onclick="setActiveNav(this, 'ai')">
+     <div class="nav-icon">
+      🤖
+     </div><span class="nav-label">AI Chat</span>
+    </div>
+    <div class="nav-item" onclick="setActiveNav(this, 'tools')">
+     <div class="nav-icon">
+      🛠️
+     </div><span class="nav-label">Tools</span>
+    </div>
+   </div><!-- Modal -->
+   <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+     <div class="modal-header">
+      <h3 id="modal-title">Modal Title</h3><button class="close-btn" onclick="closeModal()">✕</button>
+     </div>
+     <div id="modal-body"></div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#f0f4f8",
+      surface_color: "#ffffff",
+      text_color: "#1e293b",
+      primary_action_color: "#6366f1",
+      secondary_action_color: "#ec4899",
+      font_family: "Inter",
+      font_size: 14,
+      app_title: "Aivancity Hub",
+      welcome_message: "Welcome back",
+      student_name: "Alex",
+      announcement_title: "Campus Event Tomorrow",
+      announcement_text: "Join us for the Tech Innovation Fair at 2 PM in Building A"
+    };
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${baseSize}px`;
+      document.body.style.background = config.background_color || defaultConfig.background_color;
+
+      const appContainer = document.querySelector('.app-container');
+      if (appContainer) {
+        appContainer.style.background = config.surface_color || defaultConfig.surface_color;
+      }
+
+      const textElements = document.querySelectorAll('h1, h2, h3, h4, p, span, .nav-label');
+      textElements.forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const scheduleDetails = document.querySelectorAll('.schedule-details h4, .section-title, .modal-header h3');
+      scheduleDetails.forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const primaryButtons = document.querySelectorAll('.quick-action-icon, .view-all, .nav-item.active');
+      primaryButtons.forEach(el => {
+        if (el.classList.contains('view-all')) {
+          el.style.color = config.primary_action_color || defaultConfig.primary_action_color;
+        }
+      });
+
+      const navActiveIcon = document.querySelector('.nav-item.active .nav-icon');
+      if (navActiveIcon) {
+        navActiveIcon.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      }
+
+      const scheduleItems = document.querySelectorAll('.schedule-item');
+      scheduleItems.forEach(item => {
+        item.style.borderLeftColor = config.primary_action_color || defaultConfig.primary_action_color;
+      });
+
+      document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
+      document.getElementById('welcome-message').textContent = config.welcome_message || defaultConfig.welcome_message;
+      document.getElementById('student-name').textContent = config.student_name || defaultConfig.student_name;
+      document.getElementById('announcement-title').textContent = config.announcement_title || defaultConfig.announcement_title;
+      document.getElementById('announcement-text').textContent = config.announcement_text || defaultConfig.announcement_text;
+    }
+
+    function setActiveNav(element, section) {
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+      
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab
+      const tabId = section + '-tab';
+      const selectedTab = document.getElementById(tabId);
+      if (selectedTab) {
+        selectedTab.classList.add('active');
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showSection(section) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      let content = '';
+      switch(section) {
+        case 'timetable':
+          modalTitle.textContent = 'Weekly Timetable';
+          content = '<p style="color: #64748b; line-height: 1.6;">Your complete weekly schedule with all classes, labs, and activities.</p>';
+          break;
+        case 'attendance':
+          modalTitle.textContent = 'Attendance Record';
+          content = '<p style="color: #64748b; line-height: 1.6;">Current attendance: 92%<br><br>Keep up the great work!</p>';
+          break;
+        case 'grades':
+          modalTitle.textContent = 'Academic Performance';
+          content = '<p style="color: #64748b; line-height: 1.6;">Current GPA: 3.8<br><br>View detailed grades for all courses.</p>';
+          break;
+        case 'bde':
+          modalTitle.textContent = 'Bureau des Étudiants';
+          content = `
+            <div style="margin-bottom: 20px;">
+              <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 12px;">Get Involved with BDE</h4>
+              <p style="color: #64748b; line-height: 1.6; margin-bottom: 16px;">Join the student council, propose events, or start your own club!</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button onclick="showBDESection('apply')" style="padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+                  Apply to Join BDE
+                </button>
+                <button onclick="showBDESection('propose-event')" style="padding: 14px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+                  Propose an Event
+                </button>
+                <button onclick="showBDESection('start-club')" style="padding: 14px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+                  Start a New Club
+                </button>
+              </div>
+            </div>
+          `;
+          break;
+      }
+
+      modalBody.innerHTML = content;
+      modal.classList.add('active');
+    }
+
+    function showToolDetail(toolName) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = toolName;
+      
+      if (toolName === 'Room Booking') {
+        modalBody.innerHTML = `
+          <div style="margin-bottom: 20px;">
+            <label for="room-select" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Select Room</label>
+            <select id="room-select" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+              <option value="">Choose a room...</option>
+              <option value="Study Room A">Study Room A (4 people)</option>
+              <option value="Study Room B">Study Room B (6 people)</option>
+              <option value="Study Room C">Study Room C (8 people)</option>
+              <option value="Conference Room">Conference Room (12 people)</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label for="booking-date" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Date</label>
+            <input type="date" id="booking-date" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div>
+              <label for="start-time" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Start Time</label>
+              <input type="time" id="start-time" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="end-time" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">End Time</label>
+              <input type="time" id="end-time" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+          </div>
+          <button onclick="submitRoomBooking()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Book Room
+          </button>
+          <div id="booking-result" style="margin-top: 16px; padding: 12px; border-radius: 8px; display: none;"></div>
+        `;
+      } else if (toolName === 'Library') {
+        modalBody.innerHTML = `
+          <div style="margin-bottom: 20px;">
+            <input type="text" id="library-search" placeholder="Search books, journals, articles..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          <div id="library-results" style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
+              <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Introduction to Artificial Intelligence</h4>
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">by Stuart Russell & Peter Norvig</p>
+              <div style="display: flex; gap: 12px; font-size: 12px; color: #64748b;">
+                <span>📚 Available: 3 copies</span>
+                <span>📍 Section: CS-AI</span>
+              </div>
+            </div>
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
+              <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Deep Learning</h4>
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">by Ian Goodfellow</p>
+              <div style="display: flex; gap: 12px; font-size: 12px; color: #64748b;">
+                <span>📚 Available: 2 copies</span>
+                <span>📍 Section: CS-ML</span>
+              </div>
+            </div>
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
+              <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Database System Concepts</h4>
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">by Abraham Silberschatz</p>
+              <div style="display: flex; gap: 12px; font-size: 12px; color: #64748b;">
+                <span>📚 Available: 5 copies</span>
+                <span>📍 Section: CS-DB</span>
+              </div>
+            </div>
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea;">
+              <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Clean Code</h4>
+              <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">by Robert C. Martin</p>
+              <div style="display: flex; gap: 12px; font-size: 12px; color: #64748b;">
+                <span>📚 Available: 4 copies</span>
+                <span>📍 Section: CS-SE</span>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add search functionality
+        setTimeout(() => {
+          const searchInput = document.getElementById('library-search');
+          if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+              const searchTerm = e.target.value.toLowerCase();
+              const results = document.getElementById('library-results');
+              const books = results.querySelectorAll('div[style*="padding: 16px"]');
+              
+              books.forEach(book => {
+                const title = book.querySelector('h4').textContent.toLowerCase();
+                const author = book.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || author.includes(searchTerm) || searchTerm === '') {
+                  book.style.display = 'block';
+                } else {
+                  book.style.display = 'none';
+                }
+              });
+            });
+          }
+        }, 100);
+      } else if (toolName === 'Contacts') {
+        modalBody.innerHTML = `
+          <div style="margin-bottom: 20px;">
+            <input type="text" id="contacts-search" placeholder="Search students, professors..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          <div id="contacts-list" style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="contact-item" style="padding: 16px; background: #f8fafc; border-radius: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">👨‍🎓</div>
+              <div style="flex: 1;">
+                <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Sarah Johnson</h4>
+                <p style="font-size: 13px; color: #64748b;">Computer Science • Year 3</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="event.stopPropagation(); showContactInfo('Email', 'sarah.johnson@aivancity.edu')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📧</button>
+                <button onclick="event.stopPropagation(); showContactInfo('Phone', '+33 6 12 34 56 78')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📱</button>
+              </div>
+            </div>
+            <div class="contact-item" style="padding: 16px; background: #f8fafc; border-radius: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">👨‍🏫</div>
+              <div style="flex: 1;">
+                <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Prof. Martin</h4>
+                <p style="font-size: 13px; color: #64748b;">Machine Learning • Room A-204</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="event.stopPropagation(); showContactInfo('Email', 'j.martin@aivancity.edu')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📧</button>
+                <button onclick="event.stopPropagation(); showContactInfo('Office Hours', 'Monday & Wednesday: 2:00 PM - 4:00 PM')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">🕐</button>
+              </div>
+            </div>
+            <div class="contact-item" style="padding: 16px; background: #f8fafc; border-radius: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">👨‍🎓</div>
+              <div style="flex: 1;">
+                <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Alex Chen</h4>
+                <p style="font-size: 13px; color: #64748b;">Data Science • Year 2</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="event.stopPropagation(); showContactInfo('Email', 'alex.chen@aivancity.edu')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📧</button>
+                <button onclick="event.stopPropagation(); showContactInfo('Phone', '+33 6 98 76 54 32')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📱</button>
+              </div>
+            </div>
+            <div class="contact-item" style="padding: 16px; background: #f8fafc; border-radius: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">👨‍🏫</div>
+              <div style="flex: 1;">
+                <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Prof. Chen</h4>
+                <p style="font-size: 13px; color: #64748b;">Data Structures • Room B-101</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="event.stopPropagation(); showContactInfo('Email', 'l.chen@aivancity.edu')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📧</button>
+                <button onclick="event.stopPropagation(); showContactInfo('Office Hours', 'Tuesday & Thursday: 1:00 PM - 3:00 PM')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">🕐</button>
+              </div>
+            </div>
+            <div class="contact-item" style="padding: 16px; background: #f8fafc; border-radius: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">
+              <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">👩‍🎓</div>
+              <div style="flex: 1;">
+                <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">Emma Williams</h4>
+                <p style="font-size: 13px; color: #64748b;">AI Engineering • Year 3</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button onclick="event.stopPropagation(); showContactInfo('Email', 'emma.williams@aivancity.edu')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📧</button>
+                <button onclick="event.stopPropagation(); showContactInfo('Phone', '+33 6 45 67 89 01')" style="width: 36px; height: 36px; border-radius: 8px; background: white; border: 2px solid #e2e8f0; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">📱</button>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        // Add search functionality for contacts
+        setTimeout(() => {
+          const searchInput = document.getElementById('contacts-search');
+          if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+              const searchTerm = e.target.value.toLowerCase();
+              const contactsList = document.getElementById('contacts-list');
+              const contacts = contactsList.querySelectorAll('.contact-item');
+              
+              contacts.forEach(contact => {
+                const name = contact.querySelector('h4').textContent.toLowerCase();
+                const details = contact.querySelector('p').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || details.includes(searchTerm) || searchTerm === '') {
+                  contact.style.display = 'flex';
+                } else {
+                  contact.style.display = 'none';
+                }
+              });
+            });
+          }
+        }, 100);
+      } else {
+        modalBody.innerHTML = `<p style="color: #64748b; line-height: 1.6;">Access ${toolName} features and services here.</p>`;
+      }
+      
+      modal.classList.add('active');
+    }
+
+    function submitRoomBooking() {
+      const room = document.getElementById('room-select').value;
+      const date = document.getElementById('booking-date').value;
+      const startTime = document.getElementById('start-time').value;
+      const endTime = document.getElementById('end-time').value;
+      const resultDiv = document.getElementById('booking-result');
+      
+      if (!room || !date || !startTime || !endTime) {
+        resultDiv.style.display = 'block';
+        resultDiv.style.background = '#fee2e2';
+        resultDiv.style.color = '#991b1b';
+        resultDiv.innerHTML = '⚠️ Please fill in all fields';
+        return;
+      }
+      
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = `✅ ${room} booked successfully for ${date} from ${startTime} to ${endTime}`;
+    }
+
+    function goToNotifications() {
+      // Navigate to notifications tab
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.querySelectorAll('.nav-item')[4].classList.add('active');
+      
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById('notifications-tab').classList.add('active');
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showProfile() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = 'My Profile';
+      modalBody.innerHTML = `
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 16px;">👤</div>
+          <h3 style="font-size: 20px; font-weight: 700; color: #1a2b4a; margin-bottom: 4px;">${defaultConfig.student_name}</h3>
+          <p style="font-size: 14px; color: #64748b;">Computer Science • Year 3</p>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Student ID</p>
+            <p style="font-size: 15px; font-weight: 600; color: #1a2b4a;">AIV2024001</p>
+          </div>
+          
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Email</p>
+            <p style="font-size: 15px; font-weight: 600; color: #1a2b4a;">${defaultConfig.student_name.toLowerCase()}@aivancity.edu</p>
+          </div>
+          
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Current GPA</p>
+            <p style="font-size: 15px; font-weight: 600; color: #1a2b4a;">3.8 / 4.0</p>
+          </div>
+          
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Credits Completed</p>
+            <p style="font-size: 15px; font-weight: 600; color: #1a2b4a;">90 / 120</p>
+          </div>
+          
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Expected Graduation</p>
+            <p style="font-size: 15px; font-weight: 600; color: #1a2b4a;">June 2026</p>
+          </div>
+        </div>
+        
+        <button onclick="editProfile()" style="width: 100%; margin-top: 20px; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+          Edit Profile
+        </button>
+      `;
+      modal.classList.add('active');
+    }
+    
+    function editProfile() {
+      const modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = `
+        <form onsubmit="saveProfile(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label for="profile-name" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Full Name</label>
+            <input type="text" id="profile-name" value="${defaultConfig.student_name}" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          
+          <div>
+            <label for="profile-phone" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Phone Number</label>
+            <input type="tel" id="profile-phone" value="+33 6 12 34 56 78" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          
+          <div>
+            <label for="profile-bio" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Bio</label>
+            <textarea id="profile-bio" rows="3" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;">Passionate about AI and machine learning. Love coding and solving complex problems.</textarea>
+          </div>
+          
+          <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Save Changes
+          </button>
+          <button type="button" onclick="showProfile()" style="padding: 14px; background: #f1f5f9; color: #64748b; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Cancel
+          </button>
+          <div id="profile-result" style="padding: 12px; border-radius: 8px; display: none;"></div>
+        </form>
+      `;
+    }
+    
+    function saveProfile(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById('profile-result');
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = '✅ Profile updated successfully!';
+      
+      setTimeout(() => {
+        showProfile();
+      }, 1500);
+    }
+    
+    function showCampusMap() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = 'Campus Map';
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <input type="text" id="map-search" placeholder="Search buildings, rooms, facilities..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+        </div>
+        
+        <div style="background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
+          <svg width="100%" height="300" viewBox="0 0 400 300" style="max-width: 100%;">
+            <!-- Main Campus Area -->
+            <rect x="10" y="10" width="380" height="280" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" rx="8"/>
+            
+            <!-- Building A -->
+            <rect x="30" y="40" width="80" height="60" fill="#667eea" stroke="#4c51bf" stroke-width="2" rx="4"/>
+            <text x="70" y="75" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Building A</text>
+            
+            <!-- Building B -->
+            <rect x="130" y="40" width="80" height="60" fill="#4facfe" stroke="#0284c7" stroke-width="2" rx="4"/>
+            <text x="170" y="75" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Building B</text>
+            
+            <!-- Building C (Labs) -->
+            <rect x="230" y="40" width="80" height="60" fill="#43e97b" stroke="#059669" stroke-width="2" rx="4"/>
+            <text x="270" y="75" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Labs C</text>
+            
+            <!-- Library -->
+            <rect x="30" y="120" width="100" height="80" fill="#f093fb" stroke="#c026d3" stroke-width="2" rx="4"/>
+            <text x="80" y="165" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Library</text>
+            
+            <!-- Cafeteria -->
+            <rect x="150" y="120" width="80" height="80" fill="#fbbf24" stroke="#d97706" stroke-width="2" rx="4"/>
+            <text x="190" y="165" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Cafeteria</text>
+            
+            <!-- Sports Center -->
+            <rect x="250" y="120" width="100" height="80" fill="#fb923c" stroke="#ea580c" stroke-width="2" rx="4"/>
+            <text x="300" y="165" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Sports</text>
+            
+            <!-- Parking -->
+            <rect x="30" y="220" width="150" height="50" fill="#94a3b8" stroke="#475569" stroke-width="2" rx="4"/>
+            <text x="105" y="250" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Parking</text>
+            
+            <!-- Main Entrance -->
+            <circle cx="350" cy="245" r="20" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
+            <text x="350" y="250" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Entry</text>
+          </svg>
+        </div>
+        
+        <div id="building-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="building-item" data-name="Building A" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #667eea; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Building A', 'Main lecture halls and classrooms. Rooms A-101 to A-305.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">🏢 Building A</h4>
+            <p style="font-size: 13px; color: #64748b;">Main lecture halls • Rooms A-101 to A-305</p>
+          </div>
+          
+          <div class="building-item" data-name="Building B" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #4facfe; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Building B', 'Computer science classrooms and faculty offices. Rooms B-101 to B-205.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">🏢 Building B</h4>
+            <p style="font-size: 13px; color: #64748b;">CS Classrooms • Rooms B-101 to B-205</p>
+          </div>
+          
+          <div class="building-item" data-name="Labs C" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #43e97b; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Labs C', 'Computer labs and project workspaces. Labs C-101 to C-305.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">🔬 Labs C</h4>
+            <p style="font-size: 13px; color: #64748b;">Computer Labs • Labs C-101 to C-305</p>
+          </div>
+          
+          <div class="building-item" data-name="Library" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #f093fb; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Library', 'Study spaces, books, and digital resources. Open 8 AM - 10 PM.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">📚 Library</h4>
+            <p style="font-size: 13px; color: #64748b;">Study Spaces • Open 8 AM - 10 PM</p>
+          </div>
+          
+          <div class="building-item" data-name="Cafeteria" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #fbbf24; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Cafeteria', 'Dining hall with various food options. Open 7 AM - 8 PM.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">🍽️ Cafeteria</h4>
+            <p style="font-size: 13px; color: #64748b;">Dining Hall • Open 7 AM - 8 PM</p>
+          </div>
+          
+          <div class="building-item" data-name="Sports Center" style="padding: 16px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #fb923c; cursor: pointer; transition: all 0.3s;" onclick="showBuildingDetails('Sports Center', 'Gym, basketball court, and fitness facilities. Open 6 AM - 10 PM.')">
+            <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">⚽ Sports Center</h4>
+            <p style="font-size: 13px; color: #64748b;">Gym & Courts • Open 6 AM - 10 PM</p>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+      
+      // Add search functionality
+      setTimeout(() => {
+        const searchInput = document.getElementById('map-search');
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const buildings = document.querySelectorAll('.building-item');
+            
+            buildings.forEach(building => {
+              const name = building.getAttribute('data-name').toLowerCase();
+              const text = building.textContent.toLowerCase();
+              
+              if (name.includes(searchTerm) || text.includes(searchTerm) || searchTerm === '') {
+                building.style.display = 'block';
+              } else {
+                building.style.display = 'none';
+              }
+            });
+          });
+        }
+      }, 100);
+    }
+    
+    function showBuildingDetails(name, details) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = name;
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 64px; margin-bottom: 16px;">🏢</div>
+          <p style="font-size: 16px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">${details}</p>
+          <button onclick="showCampusMap()" style="padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Back to Map
+          </button>
+        </div>
+      `;
+    }
+    
+    function showPrintingService() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = 'Printing Service';
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <div style="padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 16px;">
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 8px;">Print Balance</p>
+            <p style="font-size: 24px; font-weight: 700; color: #1a2b4a;">€12.50</p>
+          </div>
+        </div>
+        
+        <form onsubmit="submitPrintJob(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label for="print-location" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Printer Location</label>
+            <select id="print-location" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+              <option value="">Select printer...</option>
+              <option value="Library - Ground Floor">Library - Ground Floor</option>
+              <option value="Building A - Room 101">Building A - Room 101</option>
+              <option value="Building B - Room 205">Building B - Room 205</option>
+              <option value="Labs C - Room 305">Labs C - Room 305</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="print-file" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Document Name</label>
+            <input type="text" id="print-file" placeholder="e.g., Assignment_3.pdf" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label for="print-copies" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Copies</label>
+              <input type="number" id="print-copies" value="1" min="1" max="50" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="print-pages" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Pages</label>
+              <input type="number" id="print-pages" value="1" min="1" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+          </div>
+          
+          <div>
+            <label style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Print Options</label>
+            <div style="display: flex; gap: 12px;">
+              <label style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+                <input type="radio" name="print-color" value="bw" checked style="margin-right: 8px;" />
+                <span style="font-size: 14px; color: #1a2b4a;">B&W (€0.05)</span>
+              </label>
+              <label style="flex: 1; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+                <input type="radio" name="print-color" value="color" style="margin-right: 8px;" />
+                <span style="font-size: 14px; color: #1a2b4a;">Color (€0.20)</span>
+              </label>
+            </div>
+          </div>
+          
+          <div>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="print-duplex" style="width: 18px; height: 18px; cursor: pointer;" />
+              <span style="font-size: 14px; color: #1a2b4a;">Double-sided printing</span>
+            </label>
+          </div>
+          
+          <div id="print-cost" style="padding: 16px; background: #f8fafc; border-radius: 12px; text-align: center;">
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 4px;">Estimated Cost</p>
+            <p style="font-size: 20px; font-weight: 700; color: #667eea;">€0.05</p>
+          </div>
+          
+          <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Submit Print Job
+          </button>
+          <div id="print-result" style="padding: 12px; border-radius: 8px; display: none;"></div>
+        </form>
+      `;
+      
+      modal.classList.add('active');
+      
+      // Add cost calculator
+      setTimeout(() => {
+        const copiesInput = document.getElementById('print-copies');
+        const pagesInput = document.getElementById('print-pages');
+        const colorRadios = document.querySelectorAll('input[name="print-color"]');
+        const duplexCheckbox = document.getElementById('print-duplex');
+        
+        function updateCost() {
+          const copies = parseInt(copiesInput.value) || 1;
+          const pages = parseInt(pagesInput.value) || 1;
+          const isColor = document.querySelector('input[name="print-color"]:checked').value === 'color';
+          const isDuplex = duplexCheckbox.checked;
+          
+          const pricePerPage = isColor ? 0.20 : 0.05;
+          const totalPages = copies * pages;
+          const effectivePages = isDuplex ? Math.ceil(totalPages / 2) : totalPages;
+          const cost = (effectivePages * pricePerPage).toFixed(2);
+          
+          document.getElementById('print-cost').innerHTML = `
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 4px;">Estimated Cost</p>
+            <p style="font-size: 20px; font-weight: 700; color: #667eea;">€${cost}</p>
+          `;
+        }
+        
+        copiesInput.addEventListener('input', updateCost);
+        pagesInput.addEventListener('input', updateCost);
+        colorRadios.forEach(radio => radio.addEventListener('change', updateCost));
+        duplexCheckbox.addEventListener('change', updateCost);
+      }, 100);
+    }
+    
+    function submitPrintJob(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById('print-result');
+      const location = document.getElementById('print-location').value;
+      const fileName = document.getElementById('print-file').value;
+      const copies = document.getElementById('print-copies').value;
+      
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = `✅ Print job submitted! Pick up "${fileName}" (${copies} ${copies === '1' ? 'copy' : 'copies'}) at ${location}. Job ID: #${Math.floor(Math.random() * 10000)}`;
+    }
+    
+    function showGPACalculator() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = 'GPA Calculator';
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <div style="padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin-bottom: 16px; text-align: center; color: white;">
+            <p style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">Current GPA</p>
+            <p id="calculated-gpa" style="font-size: 32px; font-weight: 700;">0.00</p>
+          </div>
+        </div>
+        
+        <div id="courses-container" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+          <div class="course-entry" style="padding: 16px; background: #f8fafc; border-radius: 12px;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+              <input type="text" class="course-name" placeholder="Course name" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+              <input type="number" class="course-credits" placeholder="Credits" min="1" max="10" value="3" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+              <select class="course-grade" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                <option value="">Grade</option>
+                <option value="4.0">A (4.0)</option>
+                <option value="3.7">A- (3.7)</option>
+                <option value="3.3">B+ (3.3)</option>
+                <option value="3.0">B (3.0)</option>
+                <option value="2.7">B- (2.7)</option>
+                <option value="2.3">C+ (2.3)</option>
+                <option value="2.0">C (2.0)</option>
+                <option value="1.7">C- (1.7)</option>
+                <option value="1.3">D+ (1.3)</option>
+                <option value="1.0">D (1.0)</option>
+                <option value="0.0">F (0.0)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+          <button onclick="addCourseEntry()" style="flex: 1; padding: 12px; background: #f1f5f9; color: #667eea; border: 2px solid #667eea; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+            + Add Course
+          </button>
+          <button onclick="calculateGPA()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Calculate GPA
+          </button>
+        </div>
+        
+        <div id="gpa-breakdown" style="display: none; padding: 16px; background: #f8fafc; border-radius: 12px;">
+          <h4 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 12px;">Breakdown</h4>
+          <div id="breakdown-content"></div>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+    }
+    
+    function addCourseEntry() {
+      const container = document.getElementById('courses-container');
+      const newEntry = document.createElement('div');
+      newEntry.className = 'course-entry';
+      newEntry.style.cssText = 'padding: 16px; background: #f8fafc; border-radius: 12px; position: relative;';
+      newEntry.innerHTML = `
+        <button onclick="this.parentElement.remove(); calculateGPA();" style="position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 6px; background: #fee2e2; color: #dc2626; border: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;">×</button>
+        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <input type="text" class="course-name" placeholder="Course name" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          <input type="number" class="course-credits" placeholder="Credits" min="1" max="10" value="3" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+          <select class="course-grade" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+            <option value="">Grade</option>
+            <option value="4.0">A (4.0)</option>
+            <option value="3.7">A- (3.7)</option>
+            <option value="3.3">B+ (3.3)</option>
+            <option value="3.0">B (3.0)</option>
+            <option value="2.7">B- (2.7)</option>
+            <option value="2.3">C+ (2.3)</option>
+            <option value="2.0">C (2.0)</option>
+            <option value="1.7">C- (1.7)</option>
+            <option value="1.3">D+ (1.3)</option>
+            <option value="1.0">D (1.0)</option>
+            <option value="0.0">F (0.0)</option>
+          </select>
+        </div>
+      `;
+      container.appendChild(newEntry);
+    }
+    
+    function calculateGPA() {
+      const entries = document.querySelectorAll('.course-entry');
+      let totalPoints = 0;
+      let totalCredits = 0;
+      let breakdownHTML = '';
+      
+      entries.forEach(entry => {
+        const name = entry.querySelector('.course-name').value;
+        const credits = parseFloat(entry.querySelector('.course-credits').value) || 0;
+        const grade = parseFloat(entry.querySelector('.course-grade').value);
+        
+        if (credits > 0 && !isNaN(grade)) {
+          const points = credits * grade;
+          totalPoints += points;
+          totalCredits += credits;
+          
+          if (name) {
+            breakdownHTML += `
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                <span style="font-size: 14px; color: #1a2b4a;">${name}</span>
+                <span style="font-size: 14px; color: #64748b;">${credits} credits × ${grade.toFixed(1)} = ${points.toFixed(2)}</span>
+              </div>
+            `;
+          }
+        }
+      });
+      
+      const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
+      document.getElementById('calculated-gpa').textContent = gpa;
+      
+      if (totalCredits > 0) {
+        breakdownHTML += `
+          <div style="display: flex; justify-content: space-between; padding: 12px 0; margin-top: 8px; font-weight: 600;">
+            <span style="font-size: 14px; color: #1a2b4a;">Total</span>
+            <span style="font-size: 14px; color: #667eea;">${totalCredits} credits • GPA: ${gpa}</span>
+          </div>
+        `;
+        document.getElementById('breakdown-content').innerHTML = breakdownHTML;
+        document.getElementById('gpa-breakdown').style.display = 'block';
+      } else {
+        document.getElementById('gpa-breakdown').style.display = 'none';
+      }
+    }
+
+    function showAnnouncement() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      const title = document.getElementById('announcement-title').textContent;
+      const text = document.getElementById('announcement-text').textContent;
+
+      modalTitle.textContent = title;
+      modalBody.innerHTML = `<p style="color: #64748b; line-height: 1.6;">${text}<br><br>Don't miss this exciting opportunity to connect with innovators and showcase your projects!</p>`;
+      modal.classList.add('active');
+    }
+
+    let currentBot = null;
+
+    const botResponses = {
+      campus: {
+        welcome: "Hi! I'm your Campus Assistant. I can help you navigate the campus, find classrooms, check your schedule, and answer questions about campus facilities. What would you like to know?",
+        responses: [
+          "The library is located in the main building, open from 8 AM to 10 PM daily.",
+          "Building A houses most lecture halls. Room A-204 is on the second floor, east wing.",
+          "The cafeteria serves lunch from 11:30 AM to 2:30 PM. Today's special is pasta primavera!",
+          "You can find study rooms in the library. Book them through the Room Booking tool in the Tools tab."
+        ]
+      },
+      email: {
+        welcome: "Hello! I'm your Email Assistant. I can help you draft professional emails, improve your writing, and manage your correspondence. Would you like help writing an email, or do you have a draft you'd like me to review?",
+        responses: [
+          "Here's a professional email template:\n\nDear [Recipient],\n\nI hope this email finds you well. I am writing to...\n\nBest regards,\n[Your name]",
+          "To make your email more professional, consider starting with a clear subject line and keeping paragraphs concise.",
+          "When emailing professors, always use a formal greeting and include your full name and course information.",
+          "For follow-up emails, reference your previous conversation and be specific about what you need."
+        ]
+      },
+      wellness: {
+        welcome: "Welcome! I'm here to support your mental health and wellbeing. Remember, I'm an AI assistant and not a replacement for professional help. I can offer stress management tips, mindfulness exercises, and general wellness advice. How are you feeling today?",
+        responses: [
+          "Try this quick breathing exercise: Breathe in for 4 counts, hold for 4, exhale for 4, hold for 4. Repeat 5 times.",
+          "Taking regular breaks is important. Try the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds.",
+          "Physical activity can help reduce stress. Even a 10-minute walk can improve your mood and energy levels.",
+          "Remember to prioritize sleep. Aim for 7-9 hours per night and try to maintain a consistent sleep schedule."
+        ]
+      },
+      interview: {
+        welcome: "Hi! I'm your Interview Instructor. I can help you prepare for job interviews, practice common questions, and provide feedback on your responses. Would you like to practice a specific type of interview, or shall we start with common questions?",
+        responses: [
+          "Great question! When answering 'Tell me about yourself', focus on your education, relevant experience, and why you're interested in this role. Keep it under 2 minutes.",
+          "For behavioral questions, use the STAR method: Situation, Task, Action, Result. This helps structure your answers clearly.",
+          "When asked about weaknesses, choose a real weakness but explain how you're working to improve it.",
+          "Always prepare 2-3 questions to ask the interviewer. This shows genuine interest in the role and company."
+        ]
+      },
+      study: {
+        welcome: "Hey there! I'm your Study Buddy. I can help you with homework, explain difficult concepts, suggest study techniques, and keep you motivated. What subject or topic would you like help with today?",
+        responses: [
+          "The Pomodoro Technique is great for studying: 25 minutes of focused work, then a 5-minute break. After 4 sessions, take a longer 15-30 minute break.",
+          "Active recall is more effective than re-reading. Try testing yourself on the material instead of just reviewing notes.",
+          "When learning new concepts, try to explain them in your own words. If you can teach it, you understand it!",
+          "Create a study schedule and stick to it. Consistency is more important than cramming before exams."
+        ]
+      },
+      career: {
+        welcome: "Hello! I'm your Career Advisor. I can help you explore career paths, find internships, build your resume, and plan your professional development. What aspect of your career would you like to discuss?",
+        responses: [
+          "Start building your professional network now. Attend career fairs, connect with alumni, and join industry groups on LinkedIn.",
+          "Internships are crucial for gaining experience. Apply early - many companies recruit 6-9 months in advance.",
+          "Your resume should be tailored to each job. Highlight relevant skills and quantify your achievements when possible.",
+          "Consider informational interviews with professionals in your field of interest. Most people are happy to share their experiences."
+        ]
+      }
+    };
+
+    function selectBot(botType, icon, name, description) {
+      currentBot = botType;
+      
+      // Hide bot selection, show chat view
+      document.getElementById('bot-selection-view').style.display = 'none';
+      document.getElementById('bot-chat-view').style.display = 'block';
+      
+      // Update bot info in header
+      document.getElementById('current-bot-icon').textContent = icon;
+      document.getElementById('current-bot-name').textContent = name;
+      
+      // Clear previous messages
+      const messagesContainer = document.getElementById('chat-messages');
+      messagesContainer.innerHTML = '';
+      
+      // Add welcome message
+      const welcomeMsg = document.createElement('div');
+      welcomeMsg.className = 'ai-message';
+      welcomeMsg.innerHTML = `
+        <div class="message-avatar">${icon}</div>
+        <div class="message-bubble">
+          <p>${botResponses[botType].welcome}</p>
+        </div>
+      `;
+      messagesContainer.appendChild(welcomeMsg);
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToBotSelection() {
+      document.getElementById('bot-chat-view').style.display = 'none';
+      document.getElementById('bot-selection-view').style.display = 'block';
+      currentBot = null;
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      
+      if (!message || !currentBot) return;
+      
+      const messagesContainer = document.getElementById('chat-messages');
+      
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'user-message';
+      userMsg.innerHTML = `
+        <div class="message-avatar">👤</div>
+        <div class="message-bubble">
+          <p>${message}</p>
+        </div>
+      `;
+      messagesContainer.appendChild(userMsg);
+      
+      input.value = '';
+      
+      // Scroll to bottom
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      // Simulate AI response
+      setTimeout(() => {
+        const responses = botResponses[currentBot].responses;
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        const botIcon = document.getElementById('current-bot-icon').textContent;
+        
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'ai-message';
+        aiMsg.innerHTML = `
+          <div class="message-avatar">${botIcon}</div>
+          <div class="message-bubble">
+            <p>${randomResponse}</p>
+          </div>
+        `;
+        messagesContainer.appendChild(aiMsg);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 1000);
+    }
+
+    // Allow Enter key to send message
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatInput = document.getElementById('chat-input');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendMessage();
+          }
+        });
+      }
+    });
+
+    function showBDESection(section) {
+      const modalBody = document.getElementById('modal-body');
+      const modalTitle = document.getElementById('modal-title');
+      
+      if (section === 'apply') {
+        modalTitle.textContent = 'Apply to Join BDE';
+        modalBody.innerHTML = `
+          <form onsubmit="submitBDEApplication(event)" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label for="bde-name" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Full Name</label>
+              <input type="text" id="bde-name" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="bde-position" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Position of Interest</label>
+              <select id="bde-position" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                <option value="">Select a position...</option>
+                <option value="President">President</option>
+                <option value="Vice President">Vice President</option>
+                <option value="Treasurer">Treasurer</option>
+                <option value="Events Coordinator">Events Coordinator</option>
+                <option value="Communications">Communications</option>
+                <option value="General Member">General Member</option>
+              </select>
+            </div>
+            <div>
+              <label for="bde-motivation" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Why do you want to join?</label>
+              <textarea id="bde-motivation" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Submit Application
+            </button>
+            <div id="bde-result" style="padding: 12px; border-radius: 8px; display: none;"></div>
+          </form>
+        `;
+      } else if (section === 'propose-event') {
+        modalTitle.textContent = 'Propose an Event';
+        modalBody.innerHTML = `
+          <form onsubmit="submitEventProposal(event)" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label for="event-name" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Event Name</label>
+              <input type="text" id="event-name" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="event-type" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Event Type</label>
+              <select id="event-type" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                <option value="">Select type...</option>
+                <option value="Social">Social Event</option>
+                <option value="Academic">Academic Workshop</option>
+                <option value="Sports">Sports Activity</option>
+                <option value="Cultural">Cultural Event</option>
+                <option value="Charity">Charity/Fundraiser</option>
+              </select>
+            </div>
+            <div>
+              <label for="event-date" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Proposed Date</label>
+              <input type="date" id="event-date" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="event-description" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Event Description</label>
+              <textarea id="event-description" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Submit Proposal
+            </button>
+            <div id="event-result" style="padding: 12px; border-radius: 8px; display: none;"></div>
+          </form>
+        `;
+      } else if (section === 'start-club') {
+        modalTitle.textContent = 'Start a New Club';
+        modalBody.innerHTML = `
+          <form onsubmit="submitClubProposal(event)" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label for="club-name" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Club Name</label>
+              <input type="text" id="club-name" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="club-category" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Category</label>
+              <select id="club-category" required style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;">
+                <option value="">Select category...</option>
+                <option value="Technology">Technology</option>
+                <option value="Arts">Arts & Culture</option>
+                <option value="Sports">Sports & Fitness</option>
+                <option value="Academic">Academic</option>
+                <option value="Social">Social Impact</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="club-members" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Expected Members</label>
+              <input type="number" id="club-members" required min="5" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            <div>
+              <label for="club-purpose" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Club Purpose & Activities</label>
+              <textarea id="club-purpose" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Submit Club Proposal
+            </button>
+            <div id="club-result" style="padding: 12px; border-radius: 8px; display: none;"></div>
+          </form>
+        `;
+      }
+    }
+
+    function submitBDEApplication(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById('bde-result');
+      const name = document.getElementById('bde-name').value;
+      const position = document.getElementById('bde-position').value;
+      
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = `✅ Application submitted successfully! Thank you ${name}, we'll review your application for ${position} and contact you soon.`;
+    }
+
+    function submitEventProposal(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById('event-result');
+      const eventName = document.getElementById('event-name').value;
+      
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = `✅ Event proposal "${eventName}" submitted successfully! The BDE will review it and get back to you within 5 business days.`;
+    }
+
+    function submitClubProposal(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById('club-result');
+      const clubName = document.getElementById('club-name').value;
+      
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = '#d1fae5';
+      resultDiv.style.color = '#065f46';
+      resultDiv.innerHTML = `✅ Club proposal "${clubName}" submitted successfully! The BDE will review your proposal and schedule a meeting to discuss next steps.`;
+    }
+
+    function showContactInfo(type, info) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = type;
+      
+      let icon = '📧';
+      if (type === 'Phone') icon = '📱';
+      if (type === 'Office Hours') icon = '🕐';
+      
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">${icon}</div>
+          <p style="font-size: 18px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">${type}</p>
+          <p style="font-size: 16px; color: #64748b; line-height: 1.6;">${info}</p>
+          ${type === 'Email' ? `
+            <button onclick="window.open('mailto:${info}', '_blank')" style="margin-top: 20px; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Send Email
+            </button>
+          ` : ''}
+        </div>
+      `;
+      
+      modal.classList.add('active');
+    }
+    
+    function showAIPoints() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+
+      modalTitle.textContent = 'AI Points';
+      
+      // Calculate total points
+      const activities = [
+        { name: 'Career Fair 2025', points: 50, date: 'Jan 22, 2025', category: 'Event', status: 'upcoming' },
+        { name: 'Coding Hackathon', points: 100, date: 'Jan 25, 2025', category: 'Competition', status: 'upcoming' },
+        { name: 'AI Ethics Lecture', points: 30, date: 'Jan 28, 2025', category: 'Workshop', status: 'upcoming' },
+        { name: 'Tech Innovation Fair', points: 50, date: 'Jan 21, 2025', category: 'Event', status: 'completed' },
+        { name: 'Python Workshop', points: 40, date: 'Jan 15, 2025', category: 'Workshop', status: 'completed' },
+        { name: 'Student Orientation', points: 25, date: 'Jan 10, 2025', category: 'Event', status: 'completed' },
+        { name: 'ML Study Group', points: 35, date: 'Jan 8, 2025', category: 'Study Group', status: 'completed' }
+      ];
+      
+      const earnedPoints = activities.filter(a => a.status === 'completed').reduce((sum, a) => sum + a.points, 0);
+      const availablePoints = activities.filter(a => a.status === 'upcoming').reduce((sum, a) => sum + a.points, 0);
+      
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 24px;">
+          <div style="padding: 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; text-align: center; color: white; margin-bottom: 16px;">
+            <p style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">Total AI Points</p>
+            <p style="font-size: 48px; font-weight: 700; margin-bottom: 4px;">⭐ ${earnedPoints}</p>
+            <p style="font-size: 13px; opacity: 0.9;">Keep participating to earn more!</p>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; text-align: center;">
+              <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Earned</p>
+              <p style="font-size: 24px; font-weight: 700; color: #10b981;">✓ ${earnedPoints}</p>
+            </div>
+            <div style="padding: 16px; background: #f8fafc; border-radius: 12px; text-align: center;">
+              <p style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Available</p>
+              <p style="font-size: 24px; font-weight: 700; color: #667eea;">+ ${availablePoints}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a; margin-bottom: 12px;">How to Earn Points</h4>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 14px; color: #1a2b4a;">🎯 Attend Events</span>
+              <span style="font-size: 14px; font-weight: 600; color: #667eea;">25-50 pts</span>
+            </div>
+            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 14px; color: #1a2b4a;">📚 Join Workshops</span>
+              <span style="font-size: 14px; font-weight: 600; color: #667eea;">30-40 pts</span>
+            </div>
+            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 14px; color: #1a2b4a;">🏆 Win Competitions</span>
+              <span style="font-size: 14px; font-weight: 600; color: #667eea;">100+ pts</span>
+            </div>
+            <div style="padding: 12px; background: #f8fafc; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 14px; color: #1a2b4a;">👥 Study Groups</span>
+              <span style="font-size: 14px; font-weight: 600; color: #667eea;">20-35 pts</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h4 style="font-size: 16px; font-weight: 600; color: #1a2b4a;">Activity History</h4>
+            <div style="display: flex; gap: 8px;">
+              <button onclick="filterAIPoints('all')" id="filter-all" style="padding: 6px 12px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">All</button>
+              <button onclick="filterAIPoints('completed')" id="filter-completed" style="padding: 6px 12px; background: #f1f5f9; color: #64748b; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">Earned</button>
+              <button onclick="filterAIPoints('upcoming')" id="filter-upcoming" style="padding: 6px 12px; background: #f1f5f9; color: #64748b; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">Upcoming</button>
+            </div>
+          </div>
+          
+          <div id="ai-points-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto;">
+            ${activities.map(activity => `
+              <div class="ai-point-item" data-status="${activity.status}" style="padding: 16px; background: ${activity.status === 'completed' ? '#f0fdf4' : '#f8fafc'}; border-radius: 12px; border-left: 4px solid ${activity.status === 'completed' ? '#10b981' : '#667eea'};">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                  <div style="flex: 1;">
+                    <h5 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">${activity.name}</h5>
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 4px;">${activity.category} • ${activity.date}</p>
+                  </div>
+                  <div style="text-align: right;">
+                    <p style="font-size: 18px; font-weight: 700; color: ${activity.status === 'completed' ? '#10b981' : '#667eea'};">${activity.status === 'completed' ? '✓' : '+'} ${activity.points}</p>
+                    <p style="font-size: 11px; color: #64748b; text-transform: uppercase; font-weight: 600;">${activity.status === 'completed' ? 'Earned' : 'Available'}</p>
+                  </div>
+                </div>
+                ${activity.status === 'upcoming' ? `
+                  <button onclick="registerForActivity('${activity.name}')" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+                    Register Now
+                  </button>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div style="padding: 16px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 12px; text-align: center; color: white; margin-top: 20px;">
+          <p style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">🎁 Redeem Rewards</p>
+          <p style="font-size: 12px; opacity: 0.9;">Use your points for exclusive perks and prizes!</p>
+          <button onclick="showRewards()" style="margin-top: 12px; padding: 10px 20px; background: white; color: #f59e0b; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            View Rewards
+          </button>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+    }
+    
+    function filterAIPoints(filter) {
+      const items = document.querySelectorAll('.ai-point-item');
+      const buttons = ['filter-all', 'filter-completed', 'filter-upcoming'];
+      
+      // Update button styles
+      buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          if (btnId === 'filter-' + filter) {
+            btn.style.background = '#667eea';
+            btn.style.color = 'white';
+          } else {
+            btn.style.background = '#f1f5f9';
+            btn.style.color = '#64748b';
+          }
+        }
+      });
+      
+      // Filter items
+      items.forEach(item => {
+        const status = item.getAttribute('data-status');
+        if (filter === 'all' || status === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+    
+    function registerForActivity(activityName) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = 'Register for Activity';
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 64px; margin-bottom: 16px;">🎯</div>
+          <h4 style="font-size: 18px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">${activityName}</h4>
+          <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">You're about to register for this activity. You'll earn AI Points upon completion!</p>
+          
+          <form onsubmit="confirmRegistration(event, '${activityName}')" style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <label for="reg-email" style="display: block; font-size: 14px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px; text-align: left;">Email Confirmation</label>
+              <input type="email" id="reg-email" required placeholder="your.email@aivancity.edu" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit;" />
+            </div>
+            
+            <div style="text-align: left;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" required style="width: 18px; height: 18px; cursor: pointer;" />
+                <span style="font-size: 13px; color: #64748b;">I commit to attending this activity</span>
+              </label>
+            </div>
+            
+            <button type="submit" style="padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Confirm Registration
+            </button>
+            <button type="button" onclick="showAIPoints()" style="padding: 14px; background: #f1f5f9; color: #64748b; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Cancel
+            </button>
+          </form>
+        </div>
+      `;
+    }
+    
+    function confirmRegistration(event, activityName) {
+      event.preventDefault();
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = 'Registration Confirmed!';
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 64px; margin-bottom: 16px;">✅</div>
+          <h4 style="font-size: 18px; font-weight: 600; color: #10b981; margin-bottom: 8px;">Successfully Registered!</h4>
+          <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">You're all set for "${activityName}". We'll send you a reminder before the event. Don't forget to check in to earn your AI Points!</p>
+          
+          <button onclick="showAIPoints()" style="padding: 14px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Back to AI Points
+          </button>
+        </div>
+      `;
+    }
+    
+    function showRewards() {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = 'Redeem Rewards';
+      
+      const rewards = [
+        { name: 'Free Coffee Voucher', points: 50, icon: '☕', available: true },
+        { name: 'Library Late Pass', points: 75, icon: '📚', available: true },
+        { name: 'Priority Room Booking', points: 100, icon: '🚪', available: true },
+        { name: 'Cafeteria Meal Voucher', points: 150, icon: '🍽️', available: true },
+        { name: 'Exclusive Workshop Access', points: 200, icon: '🎓', available: false },
+        { name: 'Tech Gadget Raffle Entry', points: 250, icon: '🎁', available: false },
+        { name: 'Internship Fast Track', points: 500, icon: '💼', available: false }
+      ];
+      
+      const currentPoints = 150; // This would come from the earned points calculation
+      
+      modalBody.innerHTML = `
+        <div style="padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; text-align: center; color: white; margin-bottom: 20px;">
+          <p style="font-size: 14px; margin-bottom: 8px; opacity: 0.9;">Your AI Points</p>
+          <p style="font-size: 36px; font-weight: 700;">⭐ ${currentPoints}</p>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          ${rewards.map(reward => {
+            const canAfford = currentPoints >= reward.points;
+            return `
+              <div style="padding: 16px; background: ${canAfford ? '#f8fafc' : '#fafafa'}; border-radius: 12px; border: 2px solid ${canAfford ? '#667eea' : '#e2e8f0'}; opacity: ${canAfford ? '1' : '0.6'};">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 32px;">${reward.icon}</div>
+                    <div>
+                      <h5 style="font-size: 15px; font-weight: 600; color: #1a2b4a; margin-bottom: 4px;">${reward.name}</h5>
+                      <p style="font-size: 13px; color: #64748b;">${reward.points} points</p>
+                    </div>
+                  </div>
+                  ${canAfford ? `
+                    <button onclick="redeemReward('${reward.name}', ${reward.points})" style="padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+                      Redeem
+                    </button>
+                  ` : `
+                    <span style="font-size: 12px; color: #94a3b8; font-weight: 600;">Need ${reward.points - currentPoints} more</span>
+                  `}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        
+        <button onclick="showAIPoints()" style="width: 100%; margin-top: 20px; padding: 14px; background: #f1f5f9; color: #64748b; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+          Back to AI Points
+        </button>
+      `;
+      
+      modal.classList.add('active');
+    }
+    
+    function redeemReward(rewardName, points) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = 'Confirm Redemption';
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 64px; margin-bottom: 16px;">🎁</div>
+          <h4 style="font-size: 18px; font-weight: 600; color: #1a2b4a; margin-bottom: 8px;">Redeem ${rewardName}?</h4>
+          <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">This will cost you ${points} AI Points. The reward will be sent to your email within 24 hours.</p>
+          
+          <div style="display: flex; gap: 12px;">
+            <button onclick="confirmRedemption('${rewardName}', ${points})" style="flex: 1; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Confirm
+            </button>
+            <button onclick="showRewards()" style="flex: 1; padding: 14px; background: #f1f5f9; color: #64748b; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Cancel
+            </button>
+          </div>
+        </div>
+      `;
+    }
+    
+    function confirmRedemption(rewardName, points) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalTitle.textContent = 'Reward Redeemed!';
+      modalBody.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
+          <h4 style="font-size: 18px; font-weight: 600; color: #10b981; margin-bottom: 8px;">Success!</h4>
+          <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">You've redeemed "${rewardName}" for ${points} points! Check your email for details on how to claim your reward.</p>
+          
+          <button onclick="showAIPoints()" style="padding: 14px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Back to AI Points
+          </button>
+        </div>
+      `;
+    }
+
+    function closeModal(event) {
+      if (!event || event.target.id === 'modal') {
+        document.getElementById('modal').classList.remove('active');
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["app_title", config.app_title || defaultConfig.app_title],
+          ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+          ["student_name", config.student_name || defaultConfig.student_name],
+          ["announcement_title", config.announcement_title || defaultConfig.announcement_title],
+          ["announcement_text", config.announcement_text || defaultConfig.announcement_text]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99c70891752ebb52',t:'MTc2Mjc5MzI2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
