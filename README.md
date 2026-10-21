@@ -6,6 +6,12 @@ The goal of this project is to provide students with a **single, unified app** t
 
 The app is designed as a **B2B product for universities**, with students as end users.
 
+### How this differs from aivancity-hub
+
+[aivancity-hub](https://github.com/assim-ben-ahmed/aivancity-hub) is a **hackathon build** for one school: Express + vanilla JS, wired to live Aivancity services (Blackboard/Aimara scraping, Mistral chatbots, Office 365 room-booking emails). This repo is the **founder-stage B2B prototype** of the same idea, a multi-university, white-label product with a Next.js frontend and a TypeScript/Express/Prisma backend, built mock-first so real university APIs can be plugged in later.
+
+<!-- TODO: confirm this framing (and which one came first / which is the active project) -->
+
 ---
 
 ## 🚀 Key Features
